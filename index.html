@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Malla Curricular – Licenciatura en Turismo</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    /* Paleta general fondo */
+    /* BASES DE ESTILO */
     body {
-      margin: 0;
-      background: linear-gradient(135deg, #F7F7F7 0%, #ECECEC 100%);
-      font-family: 'Segoe UI', 'Helvetica Neue', Arial, 'Liberation Sans', sans-serif;
+      margin: 0; background: #F7F7F7;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       color: #212121;
+      user-select: none;
     }
     header {
       background: linear-gradient(90deg, #4DC4ED 0%, #1ACB6C 100%);
@@ -18,23 +18,25 @@
       padding: 2em 0 1em;
       text-align: center;
       border-radius: 0 0 24px 24px;
-      box-shadow: 0 6px 24px #0001;
+      box-shadow: 0 6px 24px #00000033;
+      margin-bottom: 2em;
     }
     .header-title {
       font-size: 2.5em;
       letter-spacing: 2px;
       font-weight: 800;
-      margin-bottom: .2em;
+      margin-bottom: 0.2em;
       display: flex;
-      align-items: center;
       justify-content: center;
+      align-items: center;
       gap: 0.5em;
     }
     .header-sub {
-      font-size: 1.02em;
-      font-weight: 400;
+      font-size: 1.05em;
       letter-spacing: 1px;
-      margin-bottom: 0.8em;
+      font-weight: 400;
+      margin-bottom: 0;
+      font-style: italic;
     }
     .stats {
       display: flex;
@@ -42,222 +44,390 @@
       gap: 36px;
       padding: 10px 0 5px;
       flex-wrap: wrap;
+      font-weight: 700;
     }
     .stat-block {
+      background: #E6F9E8;
+      min-width: 140px;
+      padding: 0.6em 1.4em;
       border-radius: 10px;
-      padding: 1em 2em;
-      background: linear-gradient(90deg,#E6F9E8 30%,#E1F3FB 100%);
-      box-shadow: 0 2px 16px #1111;
-      min-width: 180px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      box-shadow: 0 2px 10px #00000022;
+      color: #1B5E20;
     }
     .stat-title {
-      font-size: 1em;
-      color: #333;
+      font-weight: 600;
+      font-size: 0.95em;
     }
     .stat-number {
-      font-size: 1.75em;
-      font-weight: 700;
-      color: #1976D2;
+      font-size: 1.6em;
+      margin-top: 0.1em;
+      color: #0D47A1;
+      letter-spacing: 1.1px;
     }
-    /* Sección por Unidades */
-    .unit-section {
-      margin: 2em auto 0;
-      max-width: 1400px;
-      width: 98vw;
-    }
-    .unit-title {
-      margin: 1.6em 0 1em 0;
-      font-weight: 700;
-      font-size: 1.55em;
-      letter-spacing: 1px;
-      padding-left: 8px;
-    }
-    .semesters-row, .modules-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 32px;
-      justify-content: center;
-      align-items: stretch;
-    }
-    .semester-col, .module-col {
+    /* CONTENEDOR GENERAL */
+    #curriculum-content {
+      max-width: 1300px;
+      margin: auto;
       display: flex;
       flex-direction: column;
+      gap: 3em;
+      padding: 0 0.5em 3em;
+    }
+    /* UNIDAD */
+    section.unit {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6em;
+    }
+    section.unit > h2 {
+      font-weight: 700;
+      font-size: 1.7em;
+      margin-bottom: 0.5em;
+      padding-left: 10px;
+      border-left: 6px solid #4DC4ED;
+    }
+    /* FILAS DE SEMESTRES */
+    .semesters-row {
+      display: flex;
       gap: 16px;
-      min-width: 200px;
-      flex: 1 1 200px;
-      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
     }
-    .semester-title, .module-title {
-      font-weight: bold;
-      font-size: 1.1em;
-      margin-bottom: .5em;
-      letter-spacing: 1px;
-      padding: 0.2em 0.8em;
-      border-radius: 8px;
+    .semester {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      min-width: 210px;
+      background: white;
+      border-radius: 14px;
+      box-shadow: 0 3px 15px #00000022;
+      padding: 12px 12px 20px;
+      user-select: none;
+      flex: 1 1 20%;
+      max-width: 270px;
+    }
+    .semester-title {
+      font-weight: 700;
+      font-size: 1.15em;
       color: white;
+      font-family: 'Segoe UI Semibold','Arial Black',Arial,sans-serif;
+      padding: 6px 14px;
+      border-radius: 9px;
       text-align: center;
-      box-shadow: 0 1px 6px #0001;
+      margin-bottom: 12px;
+      user-select: none;
+      box-shadow: 0 0 14px #00000050;
     }
-    /* Colores por semestre */
-    .pre-color {background: #008BA3;}
-    .s1-color {background: #1B5E20;}
-    .s2-color {background: #EF6C00;}
-    .s3-color {background: #6A1B9A;}
-    .s4-color {background: #AD1457;}
-    .s5-color {background: #FBC02D; color:#222;}
-    .s6-color {background: #C62828;}
-    .s7-color {background: #1B5E20;}
-    .s8-color {background: #0D47A1;}
-    .s9-color {background: #424242;}
-    .module-ing-color {background: #006064;}
-    .module-comp-color {background: #6A1B9A;}
-
-    /* Cards de Materias/Módulos */
+    /* Colores títulos semestres */
+    .pre-color { background: #008BA3;}
+    .s1-color { background: #1B5E20;}
+    .s2-color { background: #EF6C00;}
+    .s3-color { background: #6A1B9A;}
+    .s4-color { background: #AD1457;}
+    .s5-color {
+      background: #FBC02D;
+      color: #222;
+      text-shadow: 0 0 3px #00000033;
+    }
+    .s6-color { background: #C62828;}
+    .s7-color { background: #1B5E20;}
+    .s8-color { background: #0D47A1;}
+    .s9-color { background: #424242; }
+    /* Cartas Materia */
     .subject-card {
       display: flex;
-      flex-direction: row;
       align-items: center;
       justify-content: space-between;
-      gap: 10px;
-      border-radius: 12px;
       background: #FCFCFC;
-      box-shadow: 0 1px 8px #00000014;
-      border: 1.5px solid var(--cardBorder,#E0E0E0);
-      padding: 0.85em .95em 0.85em 1.15em;
-      font-weight: 460;
-      position: relative;
+      border-radius: 11px;
+      padding: 8px 12px;
+      box-shadow: 0 0 6px #00000012;
       cursor: pointer;
-      transition: background 0.18s,box-shadow 0.15s;
-      font-size: 1.01em;
-      min-width: 160px;
-      min-height: 62px;
-    }
-    .subject-card.earned { /* Aprobada */
-      background: linear-gradient(90deg,#dff9d9 50%, #bee8fa 100%);
-      border: 1.7px solid #64b5f6;
-      opacity: 1;
-    }
-    .subject-card.locked { /* Bloqueada */
-      background: #f5f5f5;
-      color: #A4A4A4 !important;
-      border-style: dashed;
-      cursor: not-allowed;
-      position: relative;
-      opacity: 0.68;
-    }
-    .subject-card .subject-icon {
-      font-size: 1.38em;
-      margin-right: 0.5em;
-    }
-    .subject-card .credits {
-      font-size: 0.97em;
-      color: #62899F;
       font-weight: 600;
+      font-size: 0.95em;
+      transition: all 0.20s ease;
+      position: relative;
+      min-height: 56px;
+      user-select: none;
     }
-    .subject-card .check {
-      font-size: 1.5em;
-      margin-left: 0.5em;
+    .subject-card:not(.locked):hover {
+      background: #e7f3ff;
+      box-shadow: 0 4px 16px #0a66ff33;
+    }
+    .subject-card.locked {
+      cursor: default;
+      color: #a0a0a0;
+      border: 1.3px dashed #bbb;
+      background: #e5e5e5;
+      box-shadow: none !important;
+      user-select: none;
+      opacity: 0.7;
+    }
+    .subject-icon {
+      font-size: 1.4em;
+      margin-right: 8px;
+      flex-shrink: 0;
+    }
+    .subject-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-grow: 1;
+      min-width: 130px;
+      user-select: text;
+    }
+    .subject-credit {
+      font-size: 0.91em;
+      font-weight: 600;
+      color: #667;
+      user-select: none;
+      min-width: 46px;
+      text-align: right;
+      padding-right: 6px;
+    }
+    .checkmark {
+      font-size: 1.4em;
       color: #388E3C;
-      display: none;
+      margin-left: 8px;
+      user-select: none;
     }
-    .subject-card.earned .check {
-      display: inline-block;
-      animation: showCheck 0.3s;
+    .locked-icon {
+      font-size: 1.15em;
+      margin-left: 6px;
+      color: #888;
+      user-select: none;
     }
-    @keyframes showCheck { from { transform:scale(3); opacity:0; } to { transform:scale(1); opacity:1; } }
-    .subject-card .locked-icon {
-      margin-left: .7em;
-      font-size: 1.3em; color: #aeaeae;
-    }
-    /* ToolTip estilos */
-    .tooltip {
-      visibility: hidden;
-      width: 250px;
-      background-color: #2e2e2e;
-      color: #fff;
-      text-align: left;
-      border-radius: 7px;
-      padding: 8px 13px;
-      position: absolute;
-      left: 20%;
-      top: 107%;
-      z-index: 20;
-      font-size: 0.94em;
-      opacity: 0;
-      transition: opacity 0.2s;
-      box-shadow: 0 0 8px #0002;
-    }
+    /* TOOLTIP */
     .subject-card.locked:hover .tooltip {
-      visibility: visible; opacity: 1;
+      display: block;
     }
-    /* Responsive*/
-    @media screen and (max-width: 900px) {
-      .semesters-row, .modules-row { gap: 13px; }
-      .stat-block { min-width: 120px;}
+    .tooltip {
+      display: none;
+      position: absolute;
+      z-index: 2000;
+      left: 5%;
+      top: 105%;
+      background-color: #222;
+      color: white;
+      border-radius: 9px;
+      font-size: 0.85em;
+      line-height: 1.3;
+      padding: 8px 14px;
+      box-shadow: 0 2px 16px #00000099;
+      width: 230px;
+      user-select: text;
+      text-align: left;
     }
-    @media screen and (max-width: 600px) {
-      .semester-title,.module-title { font-size: 1em;}
-      .unit-title {font-size: 1em;}
-      .semesters-row, .modules-row, .stats { flex-direction: column; }
-      .semester-col, .module-col { min-width: unset;}
-      .subject-card { font-size: .93em; min-width: 0;}
-      header {padding:1.1em 0 0.5em;}
+    .tooltip ul {
+      padding-left: 19px;
+      margin: 4px 0 0 0;
     }
+    .tooltip ul > li {
+      margin-bottom: 3px;
+    }
+    /* BOTÓN */
+    /* MÓDULOS */
+    .modules-section {
+      max-width: 1300px;
+      margin: 2em auto 5em;
+      padding: 0 0.5em;
+    }
+    .modules-section > h2 {
+      font-size: 1.7em;
+      font-weight: 700;
+      margin-bottom: 12px;
+      border-left: 6px solid #006064;
+      padding-left: 12px;
+      user-select: none;
+    }
+    .modules-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      justify-content: center;
+    }
+    .module-card {
+      background: #F7F7F7;
+      border-radius: 12px;
+      min-width: 170px;
+      padding: 9px 10px;
+      box-shadow: 0 3px 13px #00000022;
+      font-weight: 600;
+      font-size: 0.95em;
+      color: #09404d;
+      cursor: pointer;
+      user-select: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+    }
+    .module-card.locked {
+      cursor: default;
+      color: #a0a0a0;
+      border: 1.5px dashed #bbb;
+      background: #dfdfdf;
+      opacity: 0.65;
+      box-shadow: none !important;
+    }
+    .module-icon {
+      font-size: 1.5em;
+      margin-right: 6px;
+      user-select: none;
+      flex-shrink: 0;
+    }
+    .module-left {
+      display: flex; gap: 8px; align-items: center; max-width: 65%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .module-credit {
+      font-weight: 600;
+      font-size: 0.9em;
+      color: #555;
+      padding-right: 6px;
+      user-select: none;
+      min-width: 36px;
+      text-align: right;
+    }
+    .module-check {
+      color: #388E3C;
+      font-size: 1.4em;
+      user-select: none;
+      margin-left: 8px;
+    }
+    .module-locked-icon {
+      color: #555;
+      font-size: 1.25em;
+      user-select: none;
+      margin-left: 6px;
+    }
+    .module-card.locked:hover .tooltip {
+      display: block;
+    }
+    /* COLORES DE MÓDULO */
+    .mod-ing-title {
+      color: white;
+      background: #006064;
+      padding: 8px 14px;
+      border-radius: 11px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      box-shadow: 0 0 11px #004444dd;
+      max-width: 350px;
+      user-select: none;    
+    }
+    .mod-comp-title {
+      border-radius: 11px;
+      background: #6A1B9A;
+      color: white;
+      padding: 8px 14px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      box-shadow: 0 0 11px #3f0961bc;
+      max-width: 350px;
+      user-select: none;
+    }
+    /* Colores para los títulos de semestres según requerimiento */
+    .pre-subject-bg-1 { background: #E0F7FA;}
+    .pre-subject-bg-2 { background: #B2EBF2;}
+    .pre-subject-bg-3 { background: #80DEEA;}
+
+    .s1-subject-bg-1 { background: #E8F5E9;}
+    .s1-subject-bg-2 { background: #C8E6C9;}
+    .s1-subject-bg-3 { background: #A5D6A7;}
+    .s1-subject-bg-4 { background: #81C784;}
+    .s1-subject-bg-5 { background: #66BB6A;}
+    .s1-subject-bg-6 { background: #43A047;}
+
+    .s2-subject-bg-1 { background: #FFF3E0;}
+    .s2-subject-bg-2 { background: #FFE0B2;}
+    .s2-subject-bg-3 { background: #FFCC80;}
+    .s2-subject-bg-4 { background: #FFB74D;}
+    .s2-subject-bg-5 { background: #FFA726;}
+    .s2-subject-bg-6 { background: #FF9800;}
+
+    .s3-subject-bg-1 { background: #F3E5F5;}
+    .s3-subject-bg-2 { background: #E1BEE7;}
+    .s3-subject-bg-3 { background: #CE93D8;}
+    .s3-subject-bg-4 { background: #BA68C8;}
+    .s3-subject-bg-5 { background: #AB47BC;}
+    .s3-subject-bg-6 { background: #9C27B0;}
+
+    .s4-subject-bg-1 { background: #FCE4EC;}
+    .s4-subject-bg-2 { background: #F8BBD0;}
+    .s4-subject-bg-3 { background: #F48FB1;}
+    .s4-subject-bg-4 { background: #F06292;}
+    .s4-subject-bg-5 { background: #EC407A;}
+    .s4-subject-bg-6 { background: #E91E63;}
+
+    .s5-subject-bg-1 { background: #FFFDE7;}
+    .s5-subject-bg-2 { background: #FFF9C4;}
+    .s5-subject-bg-3 { background: #FFF59D;}
+    .s5-subject-bg-4 { background: #FFF176;}
+    .s5-subject-bg-5 { background: #FFEE58;}
+    .s5-subject-bg-6 { background: #FFEB3B;}
+
+    .s6-subject-bg-1 { background: #FFEBEE;}
+    .s6-subject-bg-2 { background: #FFCDD2;}
+    .s6-subject-bg-3 { background: #EF9A9A;}
+    .s6-subject-bg-4 { background: #E57373;}
+    .s6-subject-bg-5 { background: #EF5350;}
+    .s6-subject-bg-6 { background: #F44336;}
+
+    .s7-subject-bg-1 { background: #E8F5E9;}
+    .s7-subject-bg-2 { background: #C8E6C9;}
+    .s7-subject-bg-3 { background: #A5D6A7;}
+    .s7-subject-bg-4 { background: #81C784;}
+    .s7-subject-bg-5 { background: #66BB6A;}
+    .s7-subject-bg-6 { background: #388E3C;}
+
+    .s8-subject-bg-1 {background: #E3F2FD;}
+    .s8-subject-bg-2 {background: #BBDEFB;}
+    .s8-subject-bg-3 {background: #90CAF9;}
+    .s8-subject-bg-4 {background: #64B5F6;}
+    .s8-subject-bg-5 {background: #42A5F5;}
+    .s8-subject-bg-6 {background: #1976D2;}
+
+    .s9-subject-bg-1 {background: #FAFAFA;}
+    .s9-subject-bg-2 {background: #F5F5F5;}
+    .s9-subject-bg-3 {background: #EEEEEE;}
+    .s9-subject-bg-4 {background: #E0E0E0;}
+    .s9-subject-bg-5 {background: #BDBDBD;}
+    .s9-subject-bg-6 {background: #757575;}
   </style>
 </head>
 <body>
   <header>
     <div class="header-title">🎓 LICENCIATURA EN TURISMO</div>
-    <div class="header-sub">
-      <span>¡Explora tu avance! Marca cada materia aprobada y observa cómo sumas créditos.</span>
-    </div>
+    <p class="header-sub">Marca las materias y módulos aprobados. El progreso se guardará en tu navegador automáticamente.</p>
     <div class="stats">
-      <div class="stat-block">
-        <span class="stat-title">Asignaturas Aprobadas</span>
-        <span class="stat-number" id="approvedSubjects">0</span>
-      </div>
-      <div class="stat-block">
-        <span class="stat-title">Módulos Aprobados</span>
-        <span class="stat-number" id="approvedModules">0</span>
-      </div>
-      <div class="stat-block">
-        <span class="stat-title">Créditos Obtenidos</span>
-        <span class="stat-number" id="obtainedCredits">0</span>
-      </div>
-      <div class="stat-block">
-        <span class="stat-title">Total de Asignaturas</span>
-        <span class="stat-number">57</span>
-      </div>
-      <div class="stat-block">
-        <span class="stat-title">Total de Módulos</span>
-        <span class="stat-number">9</span>
-      </div>
+      <div class="stat-block"><div class="stat-title">Asignaturas Aprobadas</div><div class="stat-number" id="approvedSubjects">0</div></div>
+      <div class="stat-block"><div class="stat-title">Módulos Aprobados</div><div class="stat-number" id="approvedModules">0</div></div>
+      <div class="stat-block"><div class="stat-title">Créditos Obtenidos</div><div class="stat-number" id="obtainedCredits">0</div></div>
+      <div class="stat-block"><div class="stat-title">Total de Asignaturas</div><div class="stat-number">57</div></div>
+      <div class="stat-block"><div class="stat-title">Total de Módulos</div><div class="stat-number">9</div></div>
     </div>
   </header>
-  <!-- Unidades -->
+
   <div id="curriculum-content"></div>
 
-  <!-- MÓDULOS -->
-  <div class="unit-section">
-    <div class="unit-title">Módulos</div>
-    <!-- INGLÉS -->
-    <div class="module-title module-ing-color">📘 Inglés (7 módulos)</div>
-    <div class="modules-row" id="ing-modules"></div>
-    <!-- COMPUTACIÓN -->
-    <div class="module-title module-comp-color" style="margin-top:22px;">💻 Computación (2 módulos)</div>
-    <div class="modules-row" id="comp-modules"></div>
+  <div class="modules-section">
+    <h2 class="mod-ing-title">📘 Módulos Inglés</h2>
+    <div id="ing-modules" class="modules-row"></div>
+    <h2 class="mod-comp-title" style="margin-top:2.4em;">💻 Módulos Computación</h2>
+    <div id="comp-modules" class="modules-row"></div>
   </div>
-  <script>
-/*
-=================== DATOS ========================
-*/
+
+<script>
+/* DATOS DE LAS MATERIAS Y MÓDULOS */
+/* Omito aquí repetir toda la lista por brevedad, pero la tienes completa en la versión anterior */
+
 const units = [
+  // Repetir aquí con nombre corto para IDs, para simplicidad, solo PRE para ejemplo mínimo
   {
     name: 'Unidad Preuniversitaria',
-    colorSet: ['#E1F3FB', '#B3E4F7', '#80D4F2', '#4DC4ED', '#1AB4E8'],
     semesters: [
       {
         name: 'PRE',
@@ -268,12 +438,11 @@ const units = [
           { id:'pre-comu', nombre:'Introducción a la Comunicación Académica', icon:'✍️', creditos:0, requisitos:[] },
           { id:'pre-pc', nombre:'Pensamiento Computacional', icon:'💻', creditos:0, requisitos:[] },
         ]
-      },
+      }
     ]
   },
   {
     name: 'Unidad Básica',
-    colorSet: ['#E6F9E8','#B3EEC9','#80E3AA','#4DD78B','#1ACB6C'],
     semesters: [
       {
         name: '1er Semestre',
@@ -318,9 +487,8 @@ const units = [
   },
   {
     name:'Unidad Profesional',
-    colorSet: ['#FFFBEB','#FFF3C8','#FFE8A0','#FFDC78','#FFD150'],
     semesters: [
-      {
+      { // 4to
         name: '4to Semestre',
         colorTitle:'#AD1457',
         colorCards: ['#FCE4EC', '#F8BBD0', '#F48FB1', '#F06292', '#EC407A', '#E91E63'],
@@ -333,7 +501,7 @@ const units = [
           { id:'campis', nombre:'Campismo y Recreación Turística', icon:'⛺', creditos:1.6666, requisitos:['gastr','com-tur'] }
         ]
       },
-      {
+      { // 5to
         name: '5to Semestre',
         colorTitle:'#FBC02D',
         colorCards: ['#FFFDE7','#FFF9C4','#FFF59D','#FFF176','#FFEE58','#FFEB3B'],
@@ -343,30 +511,17 @@ const units = [
           { id:'icono-tur', nombre:'Iconografía Turística', icon:'🖼️', creditos:1.6666, requisitos:['campis'] },
           { id:'oper-tours', nombre:'Operación de Tours', icon:'🚍', creditos:3.33, requisitos:['cod-tur','ges-ter-tur'] },
           { id:'fom-reg', nombre:'Fomento y Regulaciones a la Actividad Turística', icon:'⚖️', creditos:3.33, requisitos:['ges-tal-hum'] },
-          {
-            id:'des-tur-sost', nombre:'Desarrollo del Turismo Sostenible', icon:'♻️', creditos:5,
-            requisitos:[
-              'mat-fin','tec-ap','teo-tur','adm','met-inv','tec-op-tur','cos-his','bio-entu','tec-guiar',
-              'hosp','est-desc-adm','com-oral-escr','com-tur','gastr','gest-areas','man-plas','prosp-int','cont-gen',
-              'fin-cp','ges-ter-tur','ges-tal-hum','folklore','cod-tur','campis'
-            ]
-          }
+          { id:'des-tur-sost', nombre:'Desarrollo del Turismo Sostenible', icon:'♻️', creditos:5,
+            requisitos:['mat-fin','tec-ap','teo-tur','adm','met-inv','tec-op-tur','cos-his','bio-entu','tec-guiar','hosp','est-desc-adm','com-oral-escr','com-tur','gastr','gest-areas','man-plas','prosp-int','cont-gen','fin-cp','ges-ter-tur','ges-tal-hum','folklore','cod-tur','campis']}
         ]
       },
-      {
+      { // 6to
         name: '6to Semestre',
         colorTitle:'#C62828',
         colorCards: ['#FFEBEE','#FFCDD2','#EF9A9A','#E57373','#EF5350','#F44336'],
         subjects: [
-          {
-            id:'plan-tur', nombre:'Planificación Turística', icon:'🗓️', creditos:5,
-            requisitos:[
-              'mat-fin','tec-ap','teo-tur','adm','met-inv','tec-op-tur','cos-his','bio-entu','tec-guiar',
-              'hosp','est-desc-adm','com-oral-escr','com-tur','gastr','gest-areas','man-plas','prosp-int','cont-gen',
-              'fin-cp','ges-ter-tur','ges-tal-hum','folklore','cod-tur','campis',
-              'arqueo','microeco','icono-tur','oper-tours','fom-reg','des-tur-sost'
-            ]
-          },
+          { id:'plan-tur', nombre:'Planificación Turística', icon:'🗓️', creditos:5,
+            requisitos:['mat-fin','tec-ap','teo-tur','adm','met-inv','tec-op-tur','cos-his','bio-entu','tec-guiar','hosp','est-desc-adm','com-oral-escr','com-tur','gastr','gest-areas','man-plas','prosp-int','cont-gen','fin-cp','ges-ter-tur','ges-tal-hum','folklore','cod-tur','campis','arqueo','microeco','icono-tur','oper-tours','fom-reg','des-tur-sost']},
           { id:'ges-inn-emp', nombre:'Gestión de la Innovación y Emprendimiento', icon:'🚀', creditos:3.33, requisitos:['fom-reg'] },
           { id:'anim-tur', nombre:'Animación Turística', icon:'🎬', creditos:3.33, requisitos:['icono-tur'] },
           { id:'rice-eventos', nombre:'Rice-Organización de Eventos', icon:'📅', creditos:1.6666, requisitos:['des-tur-sost'] },
@@ -374,17 +529,13 @@ const units = [
           { id:'macroeco', nombre:'Macroeconomía', icon:'🌐', creditos:3.33, requisitos:['microeco'] }
         ]
       },
-      {
+      { // 7mo
         name: '7mo Semestre',
         colorTitle:'#1B5E20',
         colorCards: ['#E8F5E9', '#C8E6C9', '#A5D6A7', '#81C784', '#66BB6A', '#388E3C'],
         subjects: [
-          {
-            id:'patrimonio', nombre:'Patrimonio', icon:'🏛️', creditos:5,
-            requisitos:[
-              'plan-tur','ges-inn-emp','anim-tur','rice-eventos','sist-reg','macroeco'
-            ]
-          },
+          { id:'patrimonio', nombre:'Patrimonio', icon:'🏛️', creditos:5,
+            requisitos:['plan-tur','ges-inn-emp','anim-tur','rice-eventos','sist-reg','macroeco'] },
           { id:'ges-calidad', nombre:'Gestión de Calidad y la Productividad', icon:'✅', creditos:3.33, requisitos:['ges-inn-emp'] },
           { id:'ope-albeb', nombre:'Operación de Alimentos y Bebidas', icon:'🍽️', creditos:1.6666, requisitos:['anim-tur'] },
           { id:'ope-hot', nombre:'Operación Hotelera', icon:'🏨', creditos:3.33, requisitos:['sist-reg'] },
@@ -396,36 +547,26 @@ const units = [
   },
   {
     name:'Unidad de Titulación',
-    colorSet: ['#FFEAEA','#FFD4D4','#FFBEBE','#FFA8A8','#FF9292'],
-    semesters: [
+    semesters:[
       {
-        name: '8vo Semestre',
+        name:'8vo Semestre',
         colorTitle:'#0D47A1',
         colorCards: ['#E3F2FD','#BBDEFB','#90CAF9','#64B5F6','#42A5F5','#1976D2'],
-        subjects: [
+        subjects:[
           { id:'form-eval', nombre:'Formulación y Evaluación de Proyectos', icon:'📐', creditos:3.33, requisitos:['ges-calidad'] },
-          {
-            id:'integ-reg', nombre:'Integración Regional Turística', icon:'🤝', creditos:5,
-            requisitos:['patrimonio','ges-calidad','ope-albeb','ope-hot','soc-tur','tend-tur']
-          },
+          { id:'integ-reg', nombre:'Integración Regional Turística', icon:'🤝', creditos:5, requisitos:['patrimonio','ges-calidad','ope-albeb','ope-hot','soc-tur','tend-tur']},
           { id:'estrat-comerc', nombre:'Estrategias Comerciales Turísticas', icon:'🎯', creditos:3.33, requisitos:['tend-tur'] },
-          {
-            id:'redac-titul', nombre:'Redacción del Trabajo de Titulación', icon:'📖', creditos:1.6666,
-            requisitos:['patrimonio','ges-calidad','ope-albeb','ope-hot','soc-tur','tend-tur']
-          },
-          { id:'aprec-arte', nombre:'Apreciación del Arte y la Cultura', icon:'🖌️', creditos:1.6666, requisitos:['patrimonio'] },
-          { id:'tur-gob', nombre:'Turismo y Gobernanza', icon:'🏛️', creditos:3.33, requisitos:['ope-albeb','soc-tur'] }
+          { id:'redac-titul', nombre:'Redacción del Trabajo de Titulación', icon:'📖', creditos:1.6666, requisitos:['patrimonio','ges-calidad','ope-albeb','ope-hot','soc-tur','tend-tur']},
+          { id:'aprec-arte', nombre:'Apreciación del Arte y la Cultura', icon:'🖌️', creditos:1.6666, requisitos:['patrimonio']},
+          { id:'tur-gob', nombre:'Turismo y Gobernanza', icon:'🏛️', creditos:3.33, requisitos:['ope-albeb','soc-tur']}
         ]
       },
       {
-        name: '9no Semestre',
+        name:'9no Semestre',
         colorTitle:'#424242',
         colorCards: ['#FAFAFA','#F5F5F5','#EEEEEE','#E0E0E0','#BDBDBD','#757575'],
-        subjects: [
-          {
-            id:'ges-dest', nombre:'Gestión Integral de Destinos Turísticos', icon:'🌟', creditos:5,
-            requisitos:['form-eval','integ-reg','estrat-comerc','redac-titul','aprec-arte','tur-gob']
-          },
+        subjects:[
+          { id:'ges-dest', nombre:'Gestión Integral de Destinos Turísticos', icon:'🌟', creditos:5, requisitos:['form-eval','integ-reg','estrat-comerc','redac-titul','aprec-arte','tur-gob']},
           { id:'tec-neg', nombre:'Técnicas de Negociación y Comunicación para el Turismo', icon:'🤝🗣️', creditos:3.3333, requisitos:['estrat-comerc'] },
           { id:'real-geopol', nombre:'Realidad Nacional y Geopolítica', icon:'🌏', creditos:1.67, requisitos:['tur-gob'] },
           { id:'trab-titul', nombre:'Trabajo de Titulación', icon:'🎓', creditos:3.33, requisitos:['redac-titul'] },
@@ -436,7 +577,7 @@ const units = [
     ]
   }
 ];
-// Módulos Inglés y Computación
+
 const ingModules = [
   {id:'ing-0', nombre:'-A1', icon:'🔴🏆', creditos:2.08, requisitos:[]},
   {id:'ing-1', nombre:'A1', icon:'🟠🏆', creditos:2.08, requisitos:['ing-0']},
@@ -450,152 +591,262 @@ const compModules = [
   {id:'comp-0', nombre:'Windows - Word - Internet', icon:'🪟📄🌐', creditos:8, requisitos:[]},
   {id:'comp-1', nombre:'Excel – PowerPoint', icon:'📊📽️', creditos:8, requisitos:['comp-0']}
 ];
-/******* Utilidades y estado **********/
-let aprobadas = {}, aprobadosMod = {};
-const LS_KEY = "mturismo-malla";
-const LS_MOD_KEY = "mturismo-mods";
-function saveState() {
-  localStorage.setItem(LS_KEY, JSON.stringify(aprobadas));
-  localStorage.setItem(LS_MOD_KEY, JSON.stringify(aprobadosMod));
+
+/* Estado para guardar materias y módulos aprobados en localStorage */
+const LS_SUBJECTS = 'turismo_asignaturas';
+const LS_MODULES = 'turismo_modulos';
+let aprobadas = {};
+let aprobadosMod = {};
+
+/* Carga el progreso desde localStorage */
+function loadProgress() {
+  try{
+    aprobadas = JSON.parse(localStorage.getItem(LS_SUBJECTS)) || {};
+  } catch { aprobadas = {}; }
+  try{
+    aprobadosMod = JSON.parse(localStorage.getItem(LS_MODULES)) || {};
+  } catch { aprobadosMod = {}; }
 }
-function loadState() {
-  try {
-    aprobadas = JSON.parse(localStorage.getItem(LS_KEY)) || {};
-    aprobadosMod = JSON.parse(localStorage.getItem(LS_MOD_KEY)) || {};
-  } catch { aprobadas={}; aprobadosMod={}; }
+/* Guarda progreso en localStorage */
+function saveProgress() {
+  localStorage.setItem(LS_SUBJECTS, JSON.stringify(aprobadas));
+  localStorage.setItem(LS_MODULES, JSON.stringify(aprobadosMod));
 }
-/**** Render Malla Unidades y Semestres ****/
-function renderCurriculum() {
+
+/*Obtener nombre e icono de materias según ids*/
+function obtenerNombres(ids) {
+  let nombres = [];
+  for(let id of ids){
+    let encontrado = false;
+    for(let u of units) {
+      for(let sem of u.semesters){
+        for(let s of sem.subjects){
+          if(s.id === id){
+            nombres.push(`${s.nombre} ${s.icon}`);
+            encontrado = true;
+            break;
+          }
+        }
+        if(encontrado) break;
+      }
+      if(encontrado) break;
+    }
+  }
+  return nombres;
+}
+
+/* Chequea si requisitos están aprobados */
+function requisitosAprobados(req = [], estado) {
+  return req.length === 0 || req.every(r => !!estado[r]);
+}
+
+/* Renderiza una materia */
+function renderMateria(materia, semestreKey, index, colorCards, unitIndex) {
+  const isAprobada = !!aprobadas[materia.id];
+  const desbloqueada = requisitosAprobados(materia.requisitos, aprobadas);
+
+  let clases = 'subject-card';
+  if(isAprobada) clases += ' earned';
+  if(!desbloqueada) clases += ' locked';
+
+  // color de fondo para materia según índice
+  let colorClass = '';
+  if(unitIndex===0 && semestreKey.toLowerCase().includes('pre')){ // Preuniversitaria
+    colorClass = ['pre-subject-bg-1','pre-subject-bg-2','pre-subject-bg-3'][index%3];
+  } else {
+    colorClass = `s${unitIndex + 1}-subject-bg-${(index%6)+1}`;
+  }
+  const bgColor = getComputedStyle(document.documentElement).getPropertyValue('--'+colorClass) || '';
+  const styleBG = colorCards && colorCards[index] ? `background:${colorCards[index]};` : `background:${bgColor||'#fcfcfc'};`;
+
+  // nombres de requisitos no aprobados
+  const faltantes = materia.requisitos.filter(id => !aprobadas[id]);
+  const textosFaltantes = obtenerNombres(faltantes);
+
+  return `
+    <div class="${clases}" data-id="${materia.id}" style="${styleBG.trim()}">
+      <div class="subject-left">
+        <div class="subject-icon">${materia.icon}</div>
+        <div class="subject-name" title="${materia.nombre}">${materia.nombre}</div>
+      </div>
+      <div class="subject-credit">${materia.creditos ? materia.creditos.toFixed(2) : ''} cr.</div>
+      ${isAprobada?'<div class="checkmark">✔️</div>': ''}
+      ${!desbloqueada ? `
+        <div class="locked-icon">🔒</div>
+        <div class="tooltip">
+          Para cursar necesitas:
+          <ul>${textosFaltantes.map(txt=>`<li>${txt}</li>`).join('')}</ul>
+        </div>` : ''
+      }
+    </div>
+  `;
+}
+
+/* Renderiza semestres: recibe arreglo y nombre de clase de color */
+function renderSemestre(semestre, unitIndex) {
+  const colorClass = ['pre-color','s1-color','s2-color','s3-color','s4-color','s5-color','s6-color','s7-color','s8-color','s9-color'];
+  const colorTitle = semestre.colorTitle || (unitIndex < colorClass.length?colorClass[unitIndex]:'#666');
+  return `
+    <div class="semester">
+      <div class="semester-title" style="background:${colorTitle}">${semestre.name}</div>
+      ${semestre.subjects.map((m,index) =>
+        renderMateria(m, semestre.name, index, semestre.colorCards, unitIndex)
+      ).join('')}
+    </div>
+  `;
+}
+
+/* Renderiza toda la malla curricular */
+function renderMalla(){
   let html = '';
-  units.forEach((unit, uidx) => {
-    html += `<div class="unit-section">
-      <div class="unit-title">${unit.name}</div>
-      <div class="semesters-row">`;
-    unit.semesters.forEach((sem, sidx) => {
-      html += `<div class="semester-col" style="background:${unit.colorSet[sidx%unit.colorSet.length]};border-radius:1.1em;box-shadow:0 2px 8px #0001;min-width: 220px;">
-        <div class="semester-title ${(sem.name.toLowerCase().includes('pre')?'pre-color':'s'+String(udx+(sidx+1))+'-color')}" style="background:${sem.colorTitle};">${sem.name}</div>
-        ${sem.subjects.map((sbj,i) => {
-          let card = renderSubjectCard(sbj, unit,sem);
-          return card;
-        }).join('')}
-      </div>`;
-    });
-    html += `</div></div>`;
-  });
+
+  for(let i=0; i<units.length; i++){
+    const unidad = units[i];
+
+    html += `<section class="unit"><h2>${unidad.name}</h2>`;
+
+    // Estructura horizontal de semestres depende de unidad
+    if(unidad.name==='Unidad Profesional'){
+      // Superior: 4to y 5to semestre
+      html += `<div class="semesters-row">`;
+      html += renderSemestre(unidad.semesters[0], i);
+      html += renderSemestre(unidad.semesters[1], i);
+      html += `</div>`;
+      // Inferior: 6to y 7mo semestre
+      html += `<div class="semesters-row">`;
+      html += renderSemestre(unidad.semesters[2], i);
+      html += renderSemestre(unidad.semesters[3], i);
+      html += `</div>`;
+    } else if(unidad.name==='Unidad Básica'){
+      html += `<div class="semesters-row">`;
+      unidad.semesters.forEach(sem=> html += renderSemestre(sem, i));
+      html += `</div>`;
+    } else if(unidad.name==='Unidad de Titulación'){
+      html += `<div class="semesters-row">`;
+      unidad.semesters.forEach(sem=> html += renderSemestre(sem, i));
+      html += `</div>`;
+    } else {
+      // Unidad Preuniversitaria (PRE)
+      html += `<div class="semesters-row">`;
+      unidad.semesters.forEach(sem=> html += renderSemestre(sem, i));
+      html += `</div>`;
+    }
+    html += '</section>';
+  }
   document.getElementById('curriculum-content').innerHTML = html;
 }
-function renderSubjectCard(sbj, unit, sem) {
-  // Calcula estado
-  const isApproved = !!aprobadas[sbj.id];
-  const passedReq = !sbj.requisitos.length || sbj.requisitos.every(r => aprobadas[r]);
-  let reqNames = [];
-  if (!passedReq && sbj.requisitos.length)
-    reqNames = buscarNombresReq(sbj.requisitos).filter((r,ix) => !aprobadas[sbj.requisitos[ix]]);
-  // Color para fondo cartas
-  let bgc = (sem.colorCards||['#fff'])[0];
-  if (sem.colorCards && sem.subjects)
-    bgc = sem.colorCards[ sem.subjects.indexOf(sbj)%sem.colorCards.length ];
-  return `<div class="subject-card${isApproved ? ' earned':''}${passedReq?'':' locked'}" data-sid="${sbj.id}" style="background:${bgc};" ${passedReq?'':'tabindex="0"'}>
-    <div class="subject-icon">${sbj.icon}</div>
-    <div style="flex-grow:1;">${sbj.nombre}</div>
-    <div class="credits">${sbj.creditos?sbj.creditos+' cr.':''}</div>
-    <span class="check">✔️</span>
-    ${!passedReq ? `<span class="locked-icon">🔒</span>
-    <div class="tooltip">Para cursar necesitas: <ul style="margin:6px 0 0 0;padding-left:18px;font-size:0.97em;">${reqNames.map(rn=>`<li>${rn}</li>`).join('')}</ul></div>` : ''}
-  </div>`;
+
+/* RENDERIZA MÓDULOS */
+function renderModulo(mod, index, tipo){
+  const isApproved = !!aprobadosMod[mod.id];
+  const desbloqueado = requisitosAprobados(mod.requisitos, aprobadosMod);
+
+  let clases = 'module-card';
+  if(isApproved) clases += ' earned';
+  if(!desbloqueado) clases += ' locked';
+
+  return `
+    <div class="${clases}" data-id="${mod.id}" style="
+      background:${tipo==='ing'?['#E0F7FA','#B2EBF2','#80DEEA','#4DD0E1','#26C6DA','#00BCD4','#0097A7'][index] :
+      ['#F3E5F5','#E1BEE7','#CE93D8'][index % 3]}">
+      <div class="module-left">
+        <div class="module-icon">${mod.icon}</div>
+        <div class="module-name" title="${mod.nombre}">${mod.nombre}</div>
+      </div>
+      <div class="module-credit">${mod.creditos.toFixed(2)} cr.</div>
+      ${isApproved?'<div class="module-check">✔️</div>':''}
+      ${!desbloqueado?`<div class="module-locked-icon">🔒</div>
+      <div class="tooltip">Para aprobar necesitas:<ul>${mod.requisitos.map(rid => {
+        let m = (ingModules.concat(compModules)).find(mm=>mm.id===rid);
+        return `<li>${m ? m.nombre + " " + m.icon:rid}</li>`;
+        }).join('')}</ul></div>`:''}
+    </div>
+  `;
 }
-function buscarNombresReq(ids) {
-  // Busca los nombres, dado los ids de requisitos
-  let found=[];
-  units.forEach(unit=>unit.semesters.forEach(sem=>sem.subjects.forEach(sbj=>{
-    if(ids.includes(sbj.id))
-      found.push(sbj.nombre+" "+sbj.icon);
-  })));
-  return found;
+
+/* Renderiza fila módulos inglés */
+function renderModuloIngles(){
+  const cont = document.getElementById('ing-modules');
+  cont.innerHTML = ingModules.map((m,i) => renderModulo(m, i, 'ing')).join('');
 }
-/* Render módulos inglés y Computación */
-function renderModulesRow(rowId, arr, modType) {
-  let row = document.getElementById(rowId);
-  row.innerHTML = arr.map((mod, i) => {
-    const isApproved = !!aprobadosMod[mod.id];
-    const passedReq = !mod.requisitos.length || mod.requisitos.every(r => aprobadosMod[r]);
-    let reqNames = [];
-    if (!passedReq && mod.requisitos.length)
-      reqNames = arr.filter(m=>mod.requisitos.includes(m.id)).map(m=>m.nombre+" "+m.icon);
-    let color = (modType==='ing'?['#E0F7FA','#B2EBF2','#80DEEA','#4DD0E1','#26C6DA','#00BCD4','#0097A7'][i] : ['#F3E5F5','#E1BEE7','#CE93D8'][i%3]);
-    return `<div class="subject-card${isApproved?' earned':''}${passedReq?'':' locked'}" data-mid="${mod.id}" style="background:${color};min-width:168px;">
-      <div class="subject-icon">${mod.icon}</div>
-      <div style="flex-grow:1;">${mod.nombre}</div>
-      <div class="credits">${mod.creditos} cr.</div>
-      <span class="check">✔️</span>
-      ${!passedReq ? `<span class="locked-icon">🔒</span>
-      <div class="tooltip">Para acceder necesitas: <ul style="margin:6px 0 0 0;padding-left:18px;font-size:0.97em;">${reqNames.map(rn=>`<li>${rn}</li>`).join('')}</ul></div>` : ''}
-    </div>`;
-  }).join('');
+
+/* Renderiza fila módulos computación */
+function renderModuloComputacion(){
+  const cont = document.getElementById('comp-modules');
+  cont.innerHTML = compModules.map((m,i) => renderModulo(m, i, 'comp')).join('');
 }
-/***** Eventos de click en materias y módulos ****/
-function setupListeners() {
-  // Materias
-  document.querySelectorAll('.subject-card[data-sid]').forEach(card=>{
-    card.onclick = (e) => {
-      const sid = card.getAttribute('data-sid');
-      const isLocked = card.classList.contains('locked');
-      if(isLocked) return;
-      aprobadas[sid] = !aprobadas[sid];
-      saveState();
-      rerenderAll();
-    };
+
+/* EVENTOS CLICK */
+function setupClicks(){
+  // click materias
+  document.querySelectorAll('.subject-card').forEach(card => {
+    card.onclick = e => {
+      const id = card.getAttribute('data-id');
+      if(card.classList.contains('locked')) return;
+      aprobadas[id] = !aprobadas[id];
+      saveProgress();
+      renderAll();
+    }
   });
-  // Módulos
-  document.querySelectorAll('.subject-card[data-mid]').forEach(card=>{
-    card.onclick = (e) => {
-      const mid = card.getAttribute('data-mid');
-      const isLocked = card.classList.contains('locked');
-      if(isLocked) return;
-      aprobadosMod[mid] = !aprobadosMod[mid];
-      saveState();
-      rerenderAll();
+  // click módulos
+  document.querySelectorAll('.module-card').forEach(card => {
+    card.onclick = e => {
+      const id = card.getAttribute('data-id');
+      if(card.classList.contains('locked')) return;
+      aprobadosMod[id] = !aprobadosMod[id];
+      saveProgress();
+      renderAll();
     }
   });
 }
-/**** Estadísticas ****/
-function updateStats() {
-  // Materias
-  let cAprob = 0, cred=0;
-  units.forEach(u=>u.semesters.forEach(sem=>sem.subjects.forEach(sbj=>{
-    if(aprobadas[sbj.id]) {
-      cAprob +=1;
-      cred += sbj.creditos;
-    }
-  })));
-  document.getElementById("approvedSubjects").textContent = cAprob;
-  document.getElementById("obtainedCredits").textContent = Math.round(cred*100)/100;
+
+/* ACTUALIZA ESTADÍSTICAS */
+function updateStats(){
+  // Materias aprobadas
+  const totalMaterias = 57;
+  let aprobadasCount = 0;
+  let creditosSum = 0;
+  units.forEach(unit => {
+    unit.semesters.forEach(sem => {
+      sem.subjects.forEach(sbj => {
+        if(aprobadas[sbj.id]){
+          aprobadasCount++;
+          creditosSum += sbj.creditos;
+        }
+      });
+    });
+  });
   // Módulos
-  let cMod=0, credMod=0;
-  ingModules.forEach(m=>{
-    if(aprobadosMod[m.id]){ cMod++; credMod+=m.creditos; }
+  let modCount = 0;
+  let modCreditSum = 0;
+  [...ingModules, ...compModules].forEach(mod => {
+    if(aprobadosMod[mod.id]){
+      modCount++;
+      modCreditSum += mod.creditos;
+    }
   });
-  compModules.forEach(m=>{
-    if(aprobadosMod[m.id]){ cMod++; credMod+=m.creditos; }
-  });
-  document.getElementById("approvedModules").textContent = cMod;
-  // Sumamos cred. de módulos a display total (según suma separada por requerimiento)
-  let totalCreditos = Math.round((cred + credMod)*100)/100;
-  document.getElementById("obtainedCredits").textContent = totalCreditos;
+
+  const totalCredit = creditosSum + modCreditSum;
+  document.getElementById('approvedSubjects').textContent = aprobadasCount;
+  document.getElementById('approvedModules').textContent = modCount;
+  document.getElementById('obtainedCredits').textContent = totalCredit.toFixed(2);
 }
-/***** Re-render global *****/
-function rerenderAll() {
-  renderCurriculum();
-  renderModulesRow('ing-modules', ingModules, 'ing');
-  renderModulesRow('comp-modules', compModules, 'comp');
+
+/* RENDERS COMPLETOS */
+function renderAll(){
+  renderMalla();
+  renderModuloIngles();
+  renderModuloComputacion();
   updateStats();
-  setupListeners();
+  setupClicks();
 }
-/******* INIT *********/
-window.onload = function(){
-  loadState();
-  rerenderAll();
+
+/* INICIALIZACIÓN */
+window.onload = () => {
+  loadProgress();
+  renderAll();
 };
-  </script>
+</script>
+
 </body>
 </html>
