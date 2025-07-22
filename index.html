@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Malla Curricular – Licenciatura en Turismo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    /* Paleta general fondo */
+    body {
+      margin: 0;
+      background: linear-gradient(135deg, #F7F7F7 0%, #ECECEC 100%);
+      font-family: 'Segoe UI', 'Helvetica Neue', Arial, 'Liberation Sans', sans-serif;
+      color: #212121;
+    }
+    header {
+      background: linear-gradient(90deg, #4DC4ED 0%, #1ACB6C 100%);
+      color: white;
+      padding: 2em 0 1em;
+      text-align: center;
+      border-radius: 0 0 24px 24px;
+      box-shadow: 0 6px 24px #0001;
+    }
+    .header-title {
+      font-size: 2.5em;
+      letter-spacing: 2px;
+      font-weight: 800;
+      margin-bottom: .2em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5em;
+    }
+    .header-sub {
+      font-size: 1.02em;
+      font-weight: 400;
+      letter-spacing: 1px;
+      margin-bottom: 0.8em;
+    }
+    .stats {
+      display: flex;
+      justify-content: center;
+      gap: 36px;
+      padding: 10px 0 5px;
+      flex-wrap: wrap;
+    }
+    .stat-block {
+      border-radius: 10px;
+      padding: 1em 2em;
+      background: linear-gradient(90deg,#E6F9E8 30%,#E1F3FB 100%);
+      box-shadow: 0 2px 16px #1111;
+      min-width: 180px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .stat-title {
+      font-size: 1em;
+      color: #333;
+    }
+    .stat-number {
+      font-size: 1.75em;
+      font-weight: 700;
+      color: #1976D2;
+    }
+    /* Sección por Unidades */
+    .unit-section {
+      margin: 2em auto 0;
+      max-width: 1400px;
+      width: 98vw;
+    }
+    .unit-title {
+      margin: 1.6em 0 1em 0;
+      font-weight: 700;
+      font-size: 1.55em;
+      letter-spacing: 1px;
+      padding-left: 8px;
+    }
+    .semesters-row, .modules-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 32px;
+      justify-content: center;
+      align-items: stretch;
+    }
+    .semester-col, .module-col {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      min-width: 200px;
+      flex: 1 1 200px;
+      align-items: center;
+    }
+    .semester-title, .module-title {
+      font-weight: bold;
+      font-size: 1.1em;
+      margin-bottom: .5em;
+      letter-spacing: 1px;
+      padding: 0.2em 0.8em;
+      border-radius: 8px;
+      color: white;
+      text-align: center;
+      box-shadow: 0 1px 6px #0001;
+    }
+    /* Colores por semestre */
+    .pre-color {background: #008BA3;}
+    .s1-color {background: #1B5E20;}
+    .s2-color {background: #EF6C00;}
+    .s3-color {background: #6A1B9A;}
+    .s4-color {background: #AD1457;}
+    .s5-color {background: #FBC02D; color:#222;}
+    .s6-color {background: #C62828;}
+    .s7-color {background: #1B5E20;}
+    .s8-color {background: #0D47A1;}
+    .s9-color {background: #424242;}
+    .module-ing-color {background: #006064;}
+    .module-comp-color {background: #6A1B9A;}
+
+    /* Cards de Materias/Módulos */
+    .subject-card {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      border-radius: 12px;
+      background: #FCFCFC;
+      box-shadow: 0 1px 8px #00000014;
+      border: 1.5px solid var(--cardBorder,#E0E0E0);
+      padding: 0.85em .95em 0.85em 1.15em;
+      font-weight: 460;
+      position: relative;
+      cursor: pointer;
+      transition: background 0.18s,box-shadow 0.15s;
+      font-size: 1.01em;
+      min-width: 160px;
+      min-height: 62px;
+    }
+    .subject-card.earned { /* Aprobada */
+      background: linear-gradient(90deg,#dff9d9 50%, #bee8fa 100%);
+      border: 1.7px solid #64b5f6;
+      opacity: 1;
+    }
+    .subject-card.locked { /* Bloqueada */
+      background: #f5f5f5;
+      color: #A4A4A4 !important;
+      border-style: dashed;
+      cursor: not-allowed;
+      position: relative;
+      opacity: 0.68;
+    }
+    .subject-card .subject-icon {
+      font-size: 1.38em;
+      margin-right: 0.5em;
+    }
+    .subject-card .credits {
+      font-size: 0.97em;
+      color: #62899F;
+      font-weight: 600;
+    }
+    .subject-card .check {
+      font-size: 1.5em;
+      margin-left: 0.5em;
+      color: #388E3C;
+      display: none;
+    }
+    .subject-card.earned .check {
+      display: inline-block;
+      animation: showCheck 0.3s;
+    }
+    @keyframes showCheck { from { transform:scale(3); opacity:0; } to { transform:scale(1); opacity:1; } }
+    .subject-card .locked-icon {
+      margin-left: .7em;
+      font-size: 1.3em; color: #aeaeae;
+    }
+    /* ToolTip estilos */
+    .tooltip {
+      visibility: hidden;
+      width: 250px;
+      background-color: #2e2e2e;
+      color: #fff;
+      text-align: left;
+      border-radius: 7px;
+      padding: 8px 13px;
+      position: absolute;
+      left: 20%;
+      top: 107%;
+      z-index: 20;
+      font-size: 0.94em;
+      opacity: 0;
+      transition: opacity 0.2s;
+      box-shadow: 0 0 8px #0002;
+    }
+    .subject-card.locked:hover .tooltip {
+      visibility: visible; opacity: 1;
+    }
+    /* Responsive*/
+    @media screen and (max-width: 900px) {
+      .semesters-row, .modules-row { gap: 13px; }
+      .stat-block { min-width: 120px;}
+    }
+    @media screen and (max-width: 600px) {
+      .semester-title,.module-title { font-size: 1em;}
+      .unit-title {font-size: 1em;}
+      .semesters-row, .modules-row, .stats { flex-direction: column; }
+      .semester-col, .module-col { min-width: unset;}
+      .subject-card { font-size: .93em; min-width: 0;}
+      header {padding:1.1em 0 0.5em;}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-title">🎓 LICENCIATURA EN TURISMO</div>
+    <div class="header-sub">
+      <span>¡Explora tu avance! Marca cada materia aprobada y observa cómo sumas créditos.</span>
+    </div>
+    <div class="stats">
+      <div class="stat-block">
+        <span class="stat-title">Asignaturas Aprobadas</span>
+        <span class="stat-number" id="approvedSubjects">0</span>
+      </div>
+      <div class="stat-block">
+        <span class="stat-title">Módulos Aprobados</span>
+        <span class="stat-number" id="approvedModules">0</span>
+      </div>
+      <div class="stat-block">
+        <span class="stat-title">Créditos Obtenidos</span>
+        <span class="stat-number" id="obtainedCredits">0</span>
+      </div>
+      <div class="stat-block">
+        <span class="stat-title">Total de Asignaturas</span>
+        <span class="stat-number">57</span>
+      </div>
+      <div class="stat-block">
+        <span class="stat-title">Total de Módulos</span>
+        <span class="stat-number">9</span>
+      </div>
+    </div>
+  </header>
+  <!-- Unidades -->
+  <div id="curriculum-content"></div>
+
+  <!-- MÓDULOS -->
+  <div class="unit-section">
+    <div class="unit-title">Módulos</div>
+    <!-- INGLÉS -->
+    <div class="module-title module-ing-color">📘 Inglés (7 módulos)</div>
+    <div class="modules-row" id="ing-modules"></div>
+    <!-- COMPUTACIÓN -->
+    <div class="module-title module-comp-color" style="margin-top:22px;">💻 Computación (2 módulos)</div>
+    <div class="modules-row" id="comp-modules"></div>
+  </div>
+  <script>
+/*
+=================== DATOS ========================
+*/
+const units = [
+  {
+    name: 'Unidad Preuniversitaria',
+    colorSet: ['#E1F3FB', '#B3E4F7', '#80D4F2', '#4DC4ED', '#1AB4E8'],
+    semesters: [
+      {
+        name: 'PRE',
+        colorTitle: '#008BA3',
+        colorCards: ['#E0F7FA', '#B2EBF2', '#80DEEA'],
+        subjects: [
+          { id:'pre-epi', nombre:'Epistemología del Turismo', icon:'🧠', creditos:0, requisitos:[] },
+          { id:'pre-comu', nombre:'Introducción a la Comunicación Académica', icon:'✍️', creditos:0, requisitos:[] },
+          { id:'pre-pc', nombre:'Pensamiento Computacional', icon:'💻', creditos:0, requisitos:[] },
+        ]
+      },
+    ]
+  },
+  {
+    name: 'Unidad Básica',
+    colorSet: ['#E6F9E8','#B3EEC9','#80E3AA','#4DD78B','#1ACB6C'],
+    semesters: [
+      {
+        name: '1er Semestre',
+        colorTitle:'#1B5E20',
+        colorCards:['#E8F5E9', '#C8E6C9', '#A5D6A7', '#81C784', '#66BB6A', '#43A047'],
+        subjects: [
+          { id:'mat-fin', nombre: 'Matemática Financiera', icon:'💰', creditos:1.6666, requisitos:['pre-pc'] },
+          { id:'tec-ap', nombre: 'Tecnología Aplicada', icon:'🛠️', creditos:3.33, requisitos:['pre-pc'] },
+          { id:'teo-tur', nombre: 'Teoría del Turismo', icon:'📚', creditos:3.33, requisitos:['pre-epi'] },
+          { id:'adm', nombre: 'Administración', icon:'📋', creditos:3.33, requisitos:['pre-comu'] },
+          { id:'met-inv', nombre: 'Metodología de la Investigación Científica', icon:'🔬', creditos:1.67, requisitos:['pre-comu'] },
+          { id:'tec-op-tur', nombre: 'Técnicas de Operación Turística', icon:'🧳', creditos:3.33, requisitos:['pre-epi'] }
+        ]
+      },
+      {
+        name: '2do Semestre',
+        colorTitle: '#EF6C00',
+        colorCards:['#FFF3E0','#FFE0B2','#FFCC80','#FFB74D','#FFA726','#FF9800'],
+        subjects: [
+          { id:'cos-his', nombre:'Cosmos Histórico', icon:'🏺', creditos:3.33, requisitos:['teo-tur'] },
+          { id:'bio-entu', nombre:'Bioentorno Turístico', icon:'🌱', creditos:3.33, requisitos:['teo-tur'] },
+          { id:'tec-guiar', nombre:'Técnicas de Guiar', icon:'🗺️', creditos:3.33, requisitos:['tec-op-tur'] },
+          { id:'hosp', nombre:'Hospitalidad', icon:'🤝', creditos:3.33, requisitos:['adm'] },
+          { id:'est-desc-adm', nombre:'Estadística Descriptiva Administrativa', icon:'📊', creditos:1.6666, requisitos:['mat-fin','tec-ap'] },
+          { id:'com-oral-escr', nombre:'Comunicación Oral y Escrita', icon:'🗣️', creditos:1.67, requisitos:['met-inv'] },
+        ]
+      },
+      {
+        name: '3er Semestre',
+        colorTitle:'#6A1B9A',
+        colorCards:['#F3E5F5','#E1BEE7','#CE93D8','#BA68C8','#AB47BC','#9C27B0'],
+        subjects: [
+          { id:'com-tur', nombre:'Comunidad y Turismo', icon:'🏘️', creditos:1.6666, requisitos:['hosp'] },
+          { id:'gastr', nombre:'Gastronomía Ancestral y Patrimonio', icon:'🍲', creditos:3.33, requisitos:['hosp'] },
+          { id:'gest-areas', nombre:'Gestión Operativa de Áreas Protegidas', icon:'🏞️', creditos:3.33, requisitos:['tec-guiar'] },
+          { id:'man-plas', nombre:'Manifestaciones Plásticas Turísticas', icon:'🎨', creditos:3.33, requisitos:['cos-his','com-oral-escr'] },
+          { id:'prosp-int', nombre:'Prospección Intercultural Ecuatoriana', icon:'🌎', creditos:1.6666, requisitos:['cos-his'] },
+          { id:'cont-gen', nombre:'Contabilidad General', icon:'📒', creditos:3.33, requisitos:['est-desc-adm'] }
+        ]
+      }
+    ]
+  },
+  {
+    name:'Unidad Profesional',
+    colorSet: ['#FFFBEB','#FFF3C8','#FFE8A0','#FFDC78','#FFD150'],
+    semesters: [
+      {
+        name: '4to Semestre',
+        colorTitle:'#AD1457',
+        colorCards: ['#FCE4EC', '#F8BBD0', '#F48FB1', '#F06292', '#EC407A', '#E91E63'],
+        subjects: [
+          { id:'fin-cp', nombre:'Finanzas de Corto Plazo', icon:'📈', creditos:3.33, requisitos:['cont-gen'] },
+          { id:'ges-ter-tur', nombre:'Gestión Territorial en Turismo', icon:'🏛️', creditos:3.33, requisitos:['gest-areas','man-plas'] },
+          { id:'ges-tal-hum', nombre:'Gestión del Talento Humano por Competencias', icon:'👥', creditos:2.5, requisitos:['cont-gen'] },
+          { id:'folklore', nombre:'Folklore', icon:'🎭', creditos:1.6666, requisitos:['man-plas','prosp-int'] },
+          { id:'cod-tur', nombre:'Codificación Turística', icon:'🧩', creditos:3.33, requisitos:['gest-areas'] },
+          { id:'campis', nombre:'Campismo y Recreación Turística', icon:'⛺', creditos:1.6666, requisitos:['gastr','com-tur'] }
+        ]
+      },
+      {
+        name: '5to Semestre',
+        colorTitle:'#FBC02D',
+        colorCards: ['#FFFDE7','#FFF9C4','#FFF59D','#FFF176','#FFEE58','#FFEB3B'],
+        subjects: [
+          { id:'arqueo', nombre:'Arqueología', icon:'🗿', creditos:1.6666, requisitos:['folklore'] },
+          { id:'microeco', nombre:'Microeconomía', icon:'🏦', creditos:3.33, requisitos:['fin-cp'] },
+          { id:'icono-tur', nombre:'Iconografía Turística', icon:'🖼️', creditos:1.6666, requisitos:['campis'] },
+          { id:'oper-tours', nombre:'Operación de Tours', icon:'🚍', creditos:3.33, requisitos:['cod-tur','ges-ter-tur'] },
+          { id:'fom-reg', nombre:'Fomento y Regulaciones a la Actividad Turística', icon:'⚖️', creditos:3.33, requisitos:['ges-tal-hum'] },
+          {
+            id:'des-tur-sost', nombre:'Desarrollo del Turismo Sostenible', icon:'♻️', creditos:5,
+            requisitos:[
+              'mat-fin','tec-ap','teo-tur','adm','met-inv','tec-op-tur','cos-his','bio-entu','tec-guiar',
+              'hosp','est-desc-adm','com-oral-escr','com-tur','gastr','gest-areas','man-plas','prosp-int','cont-gen',
+              'fin-cp','ges-ter-tur','ges-tal-hum','folklore','cod-tur','campis'
+            ]
+          }
+        ]
+      },
+      {
+        name: '6to Semestre',
+        colorTitle:'#C62828',
+        colorCards: ['#FFEBEE','#FFCDD2','#EF9A9A','#E57373','#EF5350','#F44336'],
+        subjects: [
+          {
+            id:'plan-tur', nombre:'Planificación Turística', icon:'🗓️', creditos:5,
+            requisitos:[
+              'mat-fin','tec-ap','teo-tur','adm','met-inv','tec-op-tur','cos-his','bio-entu','tec-guiar',
+              'hosp','est-desc-adm','com-oral-escr','com-tur','gastr','gest-areas','man-plas','prosp-int','cont-gen',
+              'fin-cp','ges-ter-tur','ges-tal-hum','folklore','cod-tur','campis',
+              'arqueo','microeco','icono-tur','oper-tours','fom-reg','des-tur-sost'
+            ]
+          },
+          { id:'ges-inn-emp', nombre:'Gestión de la Innovación y Emprendimiento', icon:'🚀', creditos:3.33, requisitos:['fom-reg'] },
+          { id:'anim-tur', nombre:'Animación Turística', icon:'🎬', creditos:3.33, requisitos:['icono-tur'] },
+          { id:'rice-eventos', nombre:'Rice-Organización de Eventos', icon:'📅', creditos:1.6666, requisitos:['des-tur-sost'] },
+          { id:'sist-reg', nombre:'Sistemas de Registros Turísticos / Sabre y Amadeus', icon:'🧾', creditos:1.6666, requisitos:['oper-tours'] },
+          { id:'macroeco', nombre:'Macroeconomía', icon:'🌐', creditos:3.33, requisitos:['microeco'] }
+        ]
+      },
+      {
+        name: '7mo Semestre',
+        colorTitle:'#1B5E20',
+        colorCards: ['#E8F5E9', '#C8E6C9', '#A5D6A7', '#81C784', '#66BB6A', '#388E3C'],
+        subjects: [
+          {
+            id:'patrimonio', nombre:'Patrimonio', icon:'🏛️', creditos:5,
+            requisitos:[
+              'plan-tur','ges-inn-emp','anim-tur','rice-eventos','sist-reg','macroeco'
+            ]
+          },
+          { id:'ges-calidad', nombre:'Gestión de Calidad y la Productividad', icon:'✅', creditos:3.33, requisitos:['ges-inn-emp'] },
+          { id:'ope-albeb', nombre:'Operación de Alimentos y Bebidas', icon:'🍽️', creditos:1.6666, requisitos:['anim-tur'] },
+          { id:'ope-hot', nombre:'Operación Hotelera', icon:'🏨', creditos:3.33, requisitos:['sist-reg'] },
+          { id:'soc-tur', nombre:'Sociología del Turismo', icon:'👨‍👩‍👧‍👦', creditos:3.33, requisitos:['anim-tur'] },
+          { id:'tend-tur', nombre:'Tendencias Turísticas', icon:'📈', creditos:1.6666, requisitos:['macroeco'] }
+        ]
+      }
+    ]
+  },
+  {
+    name:'Unidad de Titulación',
+    colorSet: ['#FFEAEA','#FFD4D4','#FFBEBE','#FFA8A8','#FF9292'],
+    semesters: [
+      {
+        name: '8vo Semestre',
+        colorTitle:'#0D47A1',
+        colorCards: ['#E3F2FD','#BBDEFB','#90CAF9','#64B5F6','#42A5F5','#1976D2'],
+        subjects: [
+          { id:'form-eval', nombre:'Formulación y Evaluación de Proyectos', icon:'📐', creditos:3.33, requisitos:['ges-calidad'] },
+          {
+            id:'integ-reg', nombre:'Integración Regional Turística', icon:'🤝', creditos:5,
+            requisitos:['patrimonio','ges-calidad','ope-albeb','ope-hot','soc-tur','tend-tur']
+          },
+          { id:'estrat-comerc', nombre:'Estrategias Comerciales Turísticas', icon:'🎯', creditos:3.33, requisitos:['tend-tur'] },
+          {
+            id:'redac-titul', nombre:'Redacción del Trabajo de Titulación', icon:'📖', creditos:1.6666,
+            requisitos:['patrimonio','ges-calidad','ope-albeb','ope-hot','soc-tur','tend-tur']
+          },
+          { id:'aprec-arte', nombre:'Apreciación del Arte y la Cultura', icon:'🖌️', creditos:1.6666, requisitos:['patrimonio'] },
+          { id:'tur-gob', nombre:'Turismo y Gobernanza', icon:'🏛️', creditos:3.33, requisitos:['ope-albeb','soc-tur'] }
+        ]
+      },
+      {
+        name: '9no Semestre',
+        colorTitle:'#424242',
+        colorCards: ['#FAFAFA','#F5F5F5','#EEEEEE','#E0E0E0','#BDBDBD','#757575'],
+        subjects: [
+          {
+            id:'ges-dest', nombre:'Gestión Integral de Destinos Turísticos', icon:'🌟', creditos:5,
+            requisitos:['form-eval','integ-reg','estrat-comerc','redac-titul','aprec-arte','tur-gob']
+          },
+          { id:'tec-neg', nombre:'Técnicas de Negociación y Comunicación para el Turismo', icon:'🤝🗣️', creditos:3.3333, requisitos:['estrat-comerc'] },
+          { id:'real-geopol', nombre:'Realidad Nacional y Geopolítica', icon:'🌏', creditos:1.67, requisitos:['tur-gob'] },
+          { id:'trab-titul', nombre:'Trabajo de Titulación', icon:'🎓', creditos:3.33, requisitos:['redac-titul'] },
+          { id:'cont-pub', nombre:'Contratación Pública', icon:'📝', creditos:3.33, requisitos:['form-eval'] },
+          { id:'liderazgo', nombre:'Liderazgo', icon:'👑', creditos:1.6666, requisitos:['aprec-arte'] }
+        ]
+      }
+    ]
+  }
+];
+// Módulos Inglés y Computación
+const ingModules = [
+  {id:'ing-0', nombre:'-A1', icon:'🔴🏆', creditos:2.08, requisitos:[]},
+  {id:'ing-1', nombre:'A1', icon:'🟠🏆', creditos:2.08, requisitos:['ing-0']},
+  {id:'ing-2', nombre:'A2', icon:'🟡🏆', creditos:2.08, requisitos:['ing-1']},
+  {id:'ing-3', nombre:'B1', icon:'🟢🏆', creditos:2.08, requisitos:['ing-2']},
+  {id:'ing-4', nombre:'B2', icon:'🔵🏆', creditos:2.08, requisitos:['ing-3']},
+  {id:'ing-5', nombre:'C1', icon:'🟣🏆', creditos:2.08, requisitos:['ing-4']},
+  {id:'ing-6', nombre:'C2', icon:'🟤🏆', creditos:2.08, requisitos:['ing-5']},
+];
+const compModules = [
+  {id:'comp-0', nombre:'Windows - Word - Internet', icon:'🪟📄🌐', creditos:8, requisitos:[]},
+  {id:'comp-1', nombre:'Excel – PowerPoint', icon:'📊📽️', creditos:8, requisitos:['comp-0']}
+];
+/******* Utilidades y estado **********/
+let aprobadas = {}, aprobadosMod = {};
+const LS_KEY = "mturismo-malla";
+const LS_MOD_KEY = "mturismo-mods";
+function saveState() {
+  localStorage.setItem(LS_KEY, JSON.stringify(aprobadas));
+  localStorage.setItem(LS_MOD_KEY, JSON.stringify(aprobadosMod));
+}
+function loadState() {
+  try {
+    aprobadas = JSON.parse(localStorage.getItem(LS_KEY)) || {};
+    aprobadosMod = JSON.parse(localStorage.getItem(LS_MOD_KEY)) || {};
+  } catch { aprobadas={}; aprobadosMod={}; }
+}
+/**** Render Malla Unidades y Semestres ****/
+function renderCurriculum() {
+  let html = '';
+  units.forEach((unit, uidx) => {
+    html += `<div class="unit-section">
+      <div class="unit-title">${unit.name}</div>
+      <div class="semesters-row">`;
+    unit.semesters.forEach((sem, sidx) => {
+      html += `<div class="semester-col" style="background:${unit.colorSet[sidx%unit.colorSet.length]};border-radius:1.1em;box-shadow:0 2px 8px #0001;min-width: 220px;">
+        <div class="semester-title ${(sem.name.toLowerCase().includes('pre')?'pre-color':'s'+String(udx+(sidx+1))+'-color')}" style="background:${sem.colorTitle};">${sem.name}</div>
+        ${sem.subjects.map((sbj,i) => {
+          let card = renderSubjectCard(sbj, unit,sem);
+          return card;
+        }).join('')}
+      </div>`;
+    });
+    html += `</div></div>`;
+  });
+  document.getElementById('curriculum-content').innerHTML = html;
+}
+function renderSubjectCard(sbj, unit, sem) {
+  // Calcula estado
+  const isApproved = !!aprobadas[sbj.id];
+  const passedReq = !sbj.requisitos.length || sbj.requisitos.every(r => aprobadas[r]);
+  let reqNames = [];
+  if (!passedReq && sbj.requisitos.length)
+    reqNames = buscarNombresReq(sbj.requisitos).filter((r,ix) => !aprobadas[sbj.requisitos[ix]]);
+  // Color para fondo cartas
+  let bgc = (sem.colorCards||['#fff'])[0];
+  if (sem.colorCards && sem.subjects)
+    bgc = sem.colorCards[ sem.subjects.indexOf(sbj)%sem.colorCards.length ];
+  return `<div class="subject-card${isApproved ? ' earned':''}${passedReq?'':' locked'}" data-sid="${sbj.id}" style="background:${bgc};" ${passedReq?'':'tabindex="0"'}>
+    <div class="subject-icon">${sbj.icon}</div>
+    <div style="flex-grow:1;">${sbj.nombre}</div>
+    <div class="credits">${sbj.creditos?sbj.creditos+' cr.':''}</div>
+    <span class="check">✔️</span>
+    ${!passedReq ? `<span class="locked-icon">🔒</span>
+    <div class="tooltip">Para cursar necesitas: <ul style="margin:6px 0 0 0;padding-left:18px;font-size:0.97em;">${reqNames.map(rn=>`<li>${rn}</li>`).join('')}</ul></div>` : ''}
+  </div>`;
+}
+function buscarNombresReq(ids) {
+  // Busca los nombres, dado los ids de requisitos
+  let found=[];
+  units.forEach(unit=>unit.semesters.forEach(sem=>sem.subjects.forEach(sbj=>{
+    if(ids.includes(sbj.id))
+      found.push(sbj.nombre+" "+sbj.icon);
+  })));
+  return found;
+}
+/* Render módulos inglés y Computación */
+function renderModulesRow(rowId, arr, modType) {
+  let row = document.getElementById(rowId);
+  row.innerHTML = arr.map((mod, i) => {
+    const isApproved = !!aprobadosMod[mod.id];
+    const passedReq = !mod.requisitos.length || mod.requisitos.every(r => aprobadosMod[r]);
+    let reqNames = [];
+    if (!passedReq && mod.requisitos.length)
+      reqNames = arr.filter(m=>mod.requisitos.includes(m.id)).map(m=>m.nombre+" "+m.icon);
+    let color = (modType==='ing'?['#E0F7FA','#B2EBF2','#80DEEA','#4DD0E1','#26C6DA','#00BCD4','#0097A7'][i] : ['#F3E5F5','#E1BEE7','#CE93D8'][i%3]);
+    return `<div class="subject-card${isApproved?' earned':''}${passedReq?'':' locked'}" data-mid="${mod.id}" style="background:${color};min-width:168px;">
+      <div class="subject-icon">${mod.icon}</div>
+      <div style="flex-grow:1;">${mod.nombre}</div>
+      <div class="credits">${mod.creditos} cr.</div>
+      <span class="check">✔️</span>
+      ${!passedReq ? `<span class="locked-icon">🔒</span>
+      <div class="tooltip">Para acceder necesitas: <ul style="margin:6px 0 0 0;padding-left:18px;font-size:0.97em;">${reqNames.map(rn=>`<li>${rn}</li>`).join('')}</ul></div>` : ''}
+    </div>`;
+  }).join('');
+}
+/***** Eventos de click en materias y módulos ****/
+function setupListeners() {
+  // Materias
+  document.querySelectorAll('.subject-card[data-sid]').forEach(card=>{
+    card.onclick = (e) => {
+      const sid = card.getAttribute('data-sid');
+      const isLocked = card.classList.contains('locked');
+      if(isLocked) return;
+      aprobadas[sid] = !aprobadas[sid];
+      saveState();
+      rerenderAll();
+    };
+  });
+  // Módulos
+  document.querySelectorAll('.subject-card[data-mid]').forEach(card=>{
+    card.onclick = (e) => {
+      const mid = card.getAttribute('data-mid');
+      const isLocked = card.classList.contains('locked');
+      if(isLocked) return;
+      aprobadosMod[mid] = !aprobadosMod[mid];
+      saveState();
+      rerenderAll();
+    }
+  });
+}
+/**** Estadísticas ****/
+function updateStats() {
+  // Materias
+  let cAprob = 0, cred=0;
+  units.forEach(u=>u.semesters.forEach(sem=>sem.subjects.forEach(sbj=>{
+    if(aprobadas[sbj.id]) {
+      cAprob +=1;
+      cred += sbj.creditos;
+    }
+  })));
+  document.getElementById("approvedSubjects").textContent = cAprob;
+  document.getElementById("obtainedCredits").textContent = Math.round(cred*100)/100;
+  // Módulos
+  let cMod=0, credMod=0;
+  ingModules.forEach(m=>{
+    if(aprobadosMod[m.id]){ cMod++; credMod+=m.creditos; }
+  });
+  compModules.forEach(m=>{
+    if(aprobadosMod[m.id]){ cMod++; credMod+=m.creditos; }
+  });
+  document.getElementById("approvedModules").textContent = cMod;
+  // Sumamos cred. de módulos a display total (según suma separada por requerimiento)
+  let totalCreditos = Math.round((cred + credMod)*100)/100;
+  document.getElementById("obtainedCredits").textContent = totalCreditos;
+}
+/***** Re-render global *****/
+function rerenderAll() {
+  renderCurriculum();
+  renderModulesRow('ing-modules', ingModules, 'ing');
+  renderModulesRow('comp-modules', compModules, 'comp');
+  updateStats();
+  setupListeners();
+}
+/******* INIT *********/
+window.onload = function(){
+  loadState();
+  rerenderAll();
+};
+  </script>
+</body>
+</html>
